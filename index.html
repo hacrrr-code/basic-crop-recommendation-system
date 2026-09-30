@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crop Recommendation</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f7f0; display: flex; justify-content: center; padding: 30px; }
+    .card { background: #fff; padding: 25px; border-radius: 10px; width: 350px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+    h2 { text-align: center; color: #2e7d32; }
+    input { width: 100%; padding: 8px; margin: 6px 0 12px; box-sizing: border-box; }
+    button { width: 100%; padding: 10px; background: #2e7d32; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .result { margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 5px; text-align: center; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Crop Recommendation</h2>
+    <form action="/predict" method="POST">
+      <label>Nitrogen (N)</label>
+      <input type="number" step="any" name="N" required>
+
+      <label>Phosphorus (P)</label>
+      <input type="number" step="any" name="P" required>
+
+      <label>Potassium (K)</label>
+      <input type="number" step="any" name="K" required>
+
+      <label>Temperature (°C)</label>
+      <input type="number" step="any" name="temperature" required>
+
+      <label>Humidity (%)</label>
+      <input type="number" step="any" name="humidity" required>
+
+      <label>pH</label>
+      <input type="number" step="any" name="ph" required>
+
+      <label>Rainfall (mm)</label>
+      <input type="number" step="any" name="rainfall" required>
+
+      <button type="submit">Recommend Crop</button>
+    </form>
+
+    {% if result %}
+      <div class="result">{{ result }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
