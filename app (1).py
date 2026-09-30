@@ -4,10 +4,7 @@ app = Flask(__name__)
 
 
 def recommend_crop(N, P, K, temperature, humidity, ph, rainfall):
-    """
-    Very basic rule-based crop recommendation.
-    Replace this with a trained ML model later for real predictions.
-    """
+
     if ph < 5.5:
         return "Tea"
     elif rainfall > 200 and temperature > 25:
@@ -29,16 +26,20 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        N = float(request.form['Nitrogen'])
-        P = float(request.form['Phosporus'])
-        K = float(request.form['Potassium'])
-        temperature = float(request.form['Temperature'])
-        humidity = float(request.form['Humidity'])
-        ph = float(request.form['pH'])
-        rainfall = float(request.form['Rainfall'])
 
-        result = recommend_crop(N, P, K, temperature, humidity, ph, rainfall)
+    try:
+        N = float(request.form['N'])
+        P = float(request.form['P'])
+        K = float(request.form['K'])
+        temperature = float(request.form['temperature'])
+        humidity = float(request.form['humidity'])
+        ph = float(request.form['ph'])
+        rainfall = float(request.form['rainfall'])
+
+        result = recommend_crop(
+            N, P, K, temperature, humidity, ph, rainfall
+        )
+
     except (KeyError, ValueError):
         result = "Invalid input, please check your values."
 
