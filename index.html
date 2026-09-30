@@ -3,47 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Crop Recommendation</title>
+
+  <title>Crop Recommendation System</title>
+
   <style>
-    body { font-family: Arial, sans-serif; background: #f0f7f0; display: flex; justify-content: center; padding: 30px; }
-    .card { background: #fff; padding: 25px; border-radius: 10px; width: 350px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
-    h2 { text-align: center; color: #2e7d32; }
-    input { width: 100%; padding: 8px; margin: 6px 0 12px; box-sizing: border-box; }
-    button { width: 100%; padding: 10px; background: #2e7d32; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-    .result { margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 5px; text-align: center; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f7f0;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2e7d32;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0 12px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      background: #e8f5e9;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <h2>Crop Recommendation</h2>
-    <form action="/predict" method="POST">
-      <label>Nitrogen (N)</label>
-      <input type="number" step="any" name="N" required>
 
-      <label>Phosphorus (P)</label>
-      <input type="number" step="any" name="P" required>
+<div class="card">
 
-      <label>Potassium (K)</label>
-      <input type="number" step="any" name="K" required>
+  <h2>Crop Recommendation</h2>
 
-      <label>Temperature (°C)</label>
-      <input type="number" step="any" name="temperature" required>
+  <form onsubmit="recommendCrop(event)">
 
-      <label>Humidity (%)</label>
-      <input type="number" step="any" name="humidity" required>
+    <label>Nitrogen (N)</label>
+    <input type="number" step="any" id="N" required>
 
-      <label>pH</label>
-      <input type="number" step="any" name="ph" required>
+    <label>Phosphorus (P)</label>
+    <input type="number" step="any" id="P" required>
 
-      <label>Rainfall (mm)</label>
-      <input type="number" step="any" name="rainfall" required>
+    <label>Potassium (K)</label>
+    <input type="number" step="any" id="K" required>
 
-      <button type="submit">Recommend Crop</button>
-    </form>
+    <label>Temperature (°C)</label>
+    <input type="number" step="any" id="temperature" required>
 
-    {% if result %}
-      <div class="result">{{ result }}</div>
-    {% endif %}
+    <label>Humidity (%)</label>
+    <input type="number" step="any" id="humidity" required>
+
+    <label>pH</label>
+    <input type="number" step="any" id="ph" required>
+
+    <label>Rainfall (mm)</label>
+    <input type="number" step="any" id="rainfall" required>
+
+    <button type="submit">Recommend Crop</button>
+
+  </form>
+
+  <div class="result" id="result">
+    Enter the values and click Recommend Crop
   </div>
+
+</div>
+
+
+<script>
+
+function recommendCrop(event) {
+
+  event.preventDefault();
+
+  let N = parseFloat(document.getElementById("N").value);
+  let P = parseFloat(document.getElementById("P").value);
+  let K = parseFloat(document.getElementById("K").value);
+  let temperature = parseFloat(document.getElementById("temperature").value);
+  let humidity = parseFloat(document.getElementById("humidity").value);
+  let ph = parseFloat(document.getElementById("ph").value);
+  let rainfall = parseFloat(document.getElementById("rainfall").value);
+
+  let crop;
+
+  if (ph < 5.5) {
+    crop = "Tea";
+  }
+  else if (rainfall > 200 && temperature > 25) {
+    crop = "Rice";
+  }
+  else if (temperature < 20 && rainfall < 100) {
+    crop = "Wheat";
+  }
+  else if (N > 80 && P > 40 && K > 40) {
+    crop = "Sugarcane";
+  }
+  else if (humidity > 70 && temperature > 20) {
+    crop = "Maize";
+  }
+  else {
+    crop = "Millets";
+  }
+
+  document.getElementById("result").innerHTML =
+    "Recommended Crop: " + crop;
+}
+
+</script>
+
 </body>
 </html>
